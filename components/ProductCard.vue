@@ -7,15 +7,28 @@
       <p class="text-lg text-secondary my-3">
         {{ product.price }} Silver Coins
       </p>
-      <button class="btn">
-        <span>Add to Basket</span>
+      <button class="btn" @click="addToBasket()" :disabled="isPending">
+        <span v-show="!isPending">Add to Basket</span>
+        <span v-show="isPending">Adding</span>
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useCartStore } from '@/stores/cartStores';
+
+const cartStore = useCartStore();
 const { product } = defineProps(['product']);
+const isPending = ref(false);
+
+const addToBasket = async () => {
+  isPending.value = true;
+  await cartStore.addToCart(product);
+  setTimeout(() => {
+    isPending.value = false;
+  }, 1000);
+};
 </script>
 
 <style scoped></style>
