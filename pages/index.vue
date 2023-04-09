@@ -12,8 +12,6 @@
 
 <script setup>
 const { data: products } = await useFetch('http://localhost:4000/products');
-
-console.log(products);
 </script>
 
 <style scoped></style>
